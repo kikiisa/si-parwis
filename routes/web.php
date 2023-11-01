@@ -4,9 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoriWisata;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FasilitasController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PemetaanController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SettingsController;
 use App\Models\WisataCategory;
 
 /*
@@ -20,7 +22,7 @@ use App\Models\WisataCategory;
 |
 */
 
-Route::get('/',[HomeController::class,'index'])->name('home')->middleware('is_login');
+Route::get('/',[HomeController::class,'newFront'])->name('home')->middleware('is_login');
 Route::get('/auth',[AuthController::class,'index'])->name('auth')->middleware('is_login');
 Route::post('/auth',[AuthController::class,'store'])->name('login');
 Route::get('logout',[AuthController::class,'destroy'])->name('logout');
@@ -29,6 +31,7 @@ Route::get('/tentang-kami',[HomeController::class,'about'])->name("about");
 Route::get('/api-peta',[PemetaanController::class,'rest_peta'])->middleware('cors');
 Route::get('/api-peta/{lat}/position/{lon}',[PemetaanController::class,'rest_petaByLatAndLot'])->middleware('cors');
 Route::get('/wisata/{id}',[HomeController::class,'show'])->name("bycategori");
+Route::get('/profile',[ProfileController::class,'index'])->name('profile');
 
 Route::middleware('auth')->group(function(){
     Route::get('/data-pemetaan',[PemetaanController::class,'index'])->name('pemetaan');
@@ -39,7 +42,7 @@ Route::middleware('auth')->group(function(){
     Route::put('/data-pemetaan/{id}',[PemetaanController::class,'update'])->name('update_pemetaan');
     
     Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
-    Route::get('/profile',[ProfileController::class,'index'])->name('profile');
+   
 
     Route::get('/wisata-kategori',[CategoriWisata::class,"index"])->name("kategori");
     Route::get('/wisata-kategori/{id}',[CategoriWisata::class,"edit"])->name("kategori.edit");
@@ -48,4 +51,12 @@ Route::middleware('auth')->group(function(){
     Route::get('/tambah-kategori',[CategoriWisata::class,"create"])->name("kategori.tambah");
     Route::post('/wisata-kategori',[CategoriWisata::class,"store"])->name("kategori.store");
     
+    Route::get('/image-fasilitas',[FasilitasController::class,'index'])->name('fasilitas');
+    Route::delete('/image-fasilitas/{id}',[FasilitasController::class,'destroy'])->name('fasilitas.delete');
+    Route::post('/image-fasilitas',[FasilitasController::class,'store'])->name('fasilitas.store');
+    Route::get('/tambah-image-fasilitas',[FasilitasController::class,'create'])->name('fasilitas.create');
+   
+    Route::get('/pengaturan',[SettingsController::class,'index'])->name('setting');
+    Route::put('/pengaturan',[SettingsController::class,'update'])->name('setting.update');
+
 });

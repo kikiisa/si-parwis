@@ -38,7 +38,7 @@ class PemetaanController extends Controller
      */
     public function rest_peta(Request $request)
     {
-        $data = Peta::all();
+        $data = Peta::with('categori')->get();
         return response()->json([
             'data' => $data
         ]);
@@ -48,7 +48,7 @@ class PemetaanController extends Controller
     {
         $lat = $id1;
         $lon = $id2;
-        $data = Peta::all()->where('latitude','=',$lat)->where('longitude','=',$lon)->first();
+        $data = Peta::with('categori')->where('latitude','=',$lat)->where('longitude','=',$lon)->first();
         return response()->json($data);
     }
     public function store(Request $request)
@@ -59,7 +59,10 @@ class PemetaanController extends Controller
             'name' => 'required',
             'long' => 'required',
             'kategori' => 'required',
+            'jam_buka' => 'required',
+            'jam_tutup' => 'required',
             'lat' => 'required',
+       
             'deskripsi' => 'required',
             'deskripsi_full' => 'required',
             'image.*' => 'image|mimes:jpeg,png,jpg,gif'
@@ -76,7 +79,10 @@ class PemetaanController extends Controller
                 'nama_titik' => $request->name,
                 'latitude' => $request->lat,
                 'bahari_id' => $request->kategori,
+                'jam_buka' => $request->jam_buka,
+                'jam_tutup' => $request->jam_tutup,
                 'longitude' => $request->long,
+                'price' => $request->price,
                 'deskripsi' => $request->deskripsi,
                 'deskripsi_full' => $request->deskripsi_full,
                 'image' => $service->returnNameMultiple($files),
@@ -142,6 +148,8 @@ class PemetaanController extends Controller
             'lat' => 'required',
             'deskripsi' => 'required',
             'deskripsi_full' => 'required',
+            'jam_buka' => 'required',
+            'jam_tutup' => 'required',
             'kategori' => 'required',
             'image.*' => 'image|mimes:jpeg,png,jpg,gif'
         ]);
@@ -160,6 +168,9 @@ class PemetaanController extends Controller
                 'longitude' => $request->long,
                 'deskripsi' => $request->deskripsi,
                 'deskripsi_full' => $request->deskripsi_full,
+                'jam_buka' => $request->jam_buka,
+                'price' => $request->price,
+                'jam_tutup' => $request->jam_tutup,
                 'bahari_id' => $request->kategori,
                 'image' => $service->returnNameMultiple($files),
             ]);
@@ -175,6 +186,8 @@ class PemetaanController extends Controller
                     'latitude' => $request->lat, 
                     'longitude' => $request->long, 
                     'deskripsi' => $request->deskripsi,
+                    'jam_buka' => $request->jam_buka,
+                    'jam_tutup' => $request->jam_tutup,
                     'bahari_id' => $request->kategori,
                     'deskripsi_full' => $request->deskripsi_full
             ]);
@@ -183,6 +196,17 @@ class PemetaanController extends Controller
             } else {
                 return redirect()->route('pemetaan')->with('errors', 'Data Titik Wilayah Gagal Di Update');
             }
+        }
+    }
+
+    public function upload_summernote(Request $request)
+    {
+        // return response()->json('fils')->status(200);
+        if($request->hasFile('file'))
+        {
+            return response()->json('file ada');
+        }else{
+            return response()->json('file kosong');
         }
     }
     /**

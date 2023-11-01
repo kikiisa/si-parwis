@@ -2808,6 +2808,6 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
 .login {
   width: 100%;
   height: 100vh;
-  background: url(../img/login.jpg) top center no-repeat;
+  background: url('../../../assets/image/bg.jpg') top center no-repeat;
   background-size: cover;
 }

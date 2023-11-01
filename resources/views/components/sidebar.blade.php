@@ -14,24 +14,32 @@
             <a href="/">User</a>
         </div>
     @endif
-    @if (Auth::check())
+    @auth
         <ul class="sidebar-menu">
             <li class="{{ Route::current()->getName() == 'dashboard' ? 'active' : '' }}"><a class="nav-link"
-                    href="{{ Route('dashboard') }}"><i class="fas fa-fire"></i> <span>Dashboard</span></a></li>
+                    href="{{ Route('dashboard') }}"><i class="fas fa-fire"></i> <span>Beranda</span></a></li>
+        </ul>
+        <ul class="sidebar-menu">
+            <li class="{{ Route::current()->getName() == 'kategori' ? 'active' : '' }}"><a class="nav-link"
+                    href="{{ Route('kategori') }}"><i class="fas fa-cube"></i> <span>Kategori</span></a></li>
+        </ul>
+        <ul class="sidebar-menu">
+            <li class="{{ Route::current()->getName() == 'fasilitas' ? 'active' : '' }}"><a class="nav-link"
+                    href="{{ Route('fasilitas') }}"><i class="fas fa-image"></i> <span>Data Image</span></a></li>
+        </ul>
+        <ul class="sidebar-menu">
             <li class="{{ Route::current()->getName() == 'pemetaan' ? 'active' : '' }}"><a class="nav-link"
-                    href="{{ Route('pemetaan') }}"><i class="fas fa-map"></i> <span>Data Pemetaan</span></a></li>
-            <li class="{{ Route::current()->getName() == 'kategori.tambah' ? 'active' : '' }}"><a class="nav-link"
-                    href="{{ Route('kategori') }}"><i class="fas fa-map"></i> <span>Kategori Wisata</span></a></li>
+                    href="{{ Route('pemetaan') }}"><i class="fas fa-map"></i> <span>Tambah Pemetaan</span></a></li>
+        </ul>
+        <ul class="sidebar-menu">
+            <li class="{{ Route::current()->getName() == 'setting' ? 'active' : '' }}"><a class="nav-link"
+                    href="{{ Route('setting') }}"><i class="fas fa-wrench"></i> <span>Pengaturan</span></a></li>
         </ul>
     @else
-        <ul class="sidebar-menu">
-            <li class="{{ Route::current()->getName() == 'home' ? 'active' : '' }}"><a class="nav-link"
-                    href="{{ Route('home') }}"><i class="fas fa-map"></i> <span>Tempat Wisata</span></a></li>
-            <li class="{{ Route::current()->getName() == 'about' ? 'active' : '' }}"><a class="nav-link"
-                    href="{{ Route('about') }}"><i class="fas fa-info"></i> <span>Tentang Kami</span></a></li>
-            
-                    <li class="{{ Route::current()->getName() == 'login' ? 'active' : '' }}"><a class="nav-link"
-                    href="{{ Route('login') }}"><i class="fas fa-fire"></i> <span>Login</span></a></li>
-        </ul>
+    <ul class="sidebar-menu">
+        <li><a class="nav-link"
+        href="{{ Route('home') }}"><i class="fas fa-fire"></i> <span>Beranda</span></a></li>
+    </ul>
     @endif
+
 </aside>

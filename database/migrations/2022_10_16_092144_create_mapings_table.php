@@ -22,6 +22,9 @@ class CreateMapingsTable extends Migration
             $table->string('longitude',75);
             $table->text('deskripsi');
             $table->text("deskripsi_full");
+            $table->string('price')->nullable();
+            $table->time('jam_buka')->nullable();
+            $table->time('jam_tutup')->nullable();
             $table->string('image');
             $table->timestamps();
         });

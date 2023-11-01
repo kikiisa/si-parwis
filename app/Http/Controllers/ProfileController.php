@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\InformasiInstansi;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
@@ -13,7 +14,10 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        return response()->view('profile.profile');
+
+        return response()->view('home.profile',[
+            'data' => InformasiInstansi::find(1)
+        ]);
     }
 
     /**

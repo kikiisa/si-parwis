@@ -14,9 +14,12 @@
         <div class="section-body">
             @foreach ($kategori as $item)
                 @php
-                    $datas = App\Models\WisataCategory::with('maping')->where("id",$item->id)->first() 
+                    $datas = App\Models\WisataCategory::with('maping')
+                        ->where('id', $item->id)
+                        ->first();
                 @endphp
-                <a href="{{ Route("bycategori",$item->slug) }}" class="btn btn-primary text-white mb-4">{{ $item->nama }} <strong>{{ count($datas->maping) }}</strong></a>
+                <a href="{{ Route('bycategori', $item->slug) }}" class="btn btn-primary text-white mb-4">{{ $item->nama }}
+                    <strong>{{ count($datas->maping) }}</strong></a>
             @endforeach
             <div class="row">
                 <div class="col-12">
@@ -30,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-start">
+            {{-- <div class="row justify-content-start">
                 @forelse($wisata as $data)
                     <div class="col-12 col-md-12 col-lg-6">
                         <div class="card card-primary">
@@ -68,16 +71,18 @@
                                 </a>
                             </div>
                             <div class="card-body">
-                                <strong>Kategori Wisata</strong> : <a href="http://" class="btn btn-success">{{ $data->categori->nama }}</a>
+                                <strong>Kategori Wisata</strong> : <a href="http://"
+                                    class="btn btn-success">{{ $data->categori->nama }}</a>
                                 <p>{!! $data->deskripsi !!}</p>
-                                <a href="{{ Route("detail.wisata",$data->uuid) }}" class="btn btn-primary">Detail Wisata</a>
+                                <a href="{{ Route('detail.wisata', $data->uuid) }}" class="btn btn-primary">Detail
+                                    Wisata</a>
                             </div>
                         </div>
                     </div>
                 @empty
                     <div class="alert alert-danger">Maaf Tempat Wisata Belum Tersedia</div>
                 @endforelse
-            </div>
+            </div> --}}
             <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -107,7 +112,7 @@
                             </div>
                             <h4 class="title-modal mt-2"></h4>
                             <div class="deskripsi">
-                                
+
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -133,6 +138,10 @@
             window.location.reload()
             pos()
         }
+
+        function onClick(data) {
+            alert(data);
+        }
         async function pos() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition((position) => {
@@ -149,6 +158,7 @@
                         .then(response => response.json())
                         .then((data) => {
                             let datas = data.data
+                            console.log(datas)
 
                             datas.map((item, index) => {
                                 let routeUs = L.Routing.osrmv1();
@@ -163,25 +173,40 @@
                                             if (routes[i].summary.totalDistance < best) {
                                                 bestRoute = i;
                                                 best = routes[i].summary.totalDistance;
-                                                BestTitik.push(routes[i])
+                                                if(datas[index].categori.slug != 'hotel')
+                                                {
+                                                    BestTitik.push(routes[i])
+                                                }
                                             }
                                         }
                                         // menggambar rute terdekat dari setiap titik 
-                                        L.Routing.line(routes[bestRoute], {
-                                            styles: [{
-                                                color: 'green',
-                                                weight: '10'
-                                            }]
-                                        }).addTo(map);
+                                        // L.Routing.line(routes[bestRoute], {
+                                        //     styles: [{
+                                        //         color: 'green',
+                                        //         weight: '10'
+                                        //     }]
+                                        // }).addTo(map);
                                     }
                                     /// menandai setiap ujung titik
-                                    L.marker([item.latitude, item.longitude]).addTo(map)
+                                    L.marker([item.latitude, item.longitude], {
+                                            riseOnHover: true,
+                                            myUrl: `/detail-wisata/${item.uuid}`,
+                                            icon: L.icon({
+                                                iconUrl: `/assets/image/${item.categori.slug}.png`,
+                                                iconSize: [35,
+                                                    35
+                                                ], // size of the icon
+                                            })
+                                        }).addTo(map)
                                         .bindPopup(
                                             `<strong>${item.nama_titik}</strong>  ${item.deskripsi}`
-                                        ).openPopup();
+                                        ).openPopup().on('click', function(evt) {
+                                            window.location.href = evt.target.options.myUrl
+                                        });
                                 })
                             })
                             datasWisata = BestTitik
+                            console.log(datasWisata)
                         })
                         .catch(error => console.log(error))
                     setTimeout(() => {
@@ -221,8 +246,8 @@
                                             <img src="/assets/image/${images[0]}" class="d-block w-100"
                                                 alt="${images[0]}">
                                         </div>`
-                                images.map((item,index) => {
-                                    html+=`<div class="carousel-item">
+                                images.map((item, index) => {
+                                    html += `<div class="carousel-item">
                                         <img src="/assets/image/${item}" class="d-block w-100"alt="...">
                                         </div>`
                                 })
@@ -233,9 +258,9 @@
                                 )
                                 $(".deskripsi").html(`<p>${datass.deskripsi}</p>`)
                             });
-                            $("#exampleModalLong").modal({
-                                backdrop: false
-                            })
+                        $("#exampleModalLong").modal({
+                            backdrop: false
+                        })
                     }, 5000)
                 });
             } else {

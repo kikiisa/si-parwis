@@ -23,7 +23,20 @@ class HomeController extends Controller
 
     public function about()
     {
-        dd("ok about page");
+        return view("profile.profile");
+    }
+
+    public function newFront()
+    {
+        $wisata = Maping::with("categori")->paginate(10);
+        $kategori = WisataCategory::all(); 
+
+        $service = new MyService();
+        return view('home.index',[
+            'wisata' => $wisata,
+            'service' => $service,
+            'kategori' => $kategori,
+        ]);
     }
 
     public function show($id)

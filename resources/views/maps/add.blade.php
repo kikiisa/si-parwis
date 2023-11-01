@@ -17,14 +17,13 @@
                     <div class="card-header bg-primary text-light">Maps</div>
                     <div class="card-body">
                         <div class="map" id="map" style="width: 100%">
-
                         </div>
                         <form action="{{ route('pemetaan') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             @method("POST")
                             <div class="form-group row mb-4 mt-4">
                                 <div class="col-sm-12 col-md-12 mb-1">
-                                    <label for="">Nama Titik Wisata</label>
+                                    <label for="">Nama Titik Pemetaan</label>
                                     <input type="text" name="uuid" value="{{ Str::uuid() }}" hidden>
                                     <input type="text" required name="name" required id="name" class="form-control" placeholder="Nama Ttitik">
                                 
@@ -43,19 +42,34 @@
                                 </div>
                                 <div class="col-sm-12 col-md-12 mb-1">
                                     <label>Deskripsi Full</label>
-                                    <textarea name="deskripsi_full" class="form-control" id="deskripsi" cols="30" rows="10" placeholder="Deskripsi"></textarea>
+                                    <textarea name="deskripsi_full" class="summernote" id="deskripsi" cols="30" rows="10" placeholder="Deskripsi"></textarea>
                                 </div>
+                                
                                 <div class="col-sm-12 col-md-12 mb-1">
                                     <select name="kategori" id="kategori" class="form-control">
-                                        <option value="">Pilih Kategori Wisata</option>
+                                        <option value="">Pilih Kategori Pemetaan</option>
                                         @foreach ($kategori as $y)
                                             <option value="{{ $y->id }}">{{ $y->nama }}</option> 
                                         @endforeach
                                     </select>
                                 </div>
+                                
+                                <div class="col-sm-12 col-md-12 mb-1">
+                                   <label for="">Jam Masuk</label>
+                                   <input type="time" required name="jam_buka" class="form-control">
+                                </div>
+                                <div class="col-sm-12 col-md-12 mb-1">
+                                   <label for="">Jam Tutup</label>
+                                   <input type="time" required name="jam_tutup" class="form-control">
+                                </div>
+                                <div class="col-sm-12 col-md-12 mb-1">
+                                   <label for="">Price</label>
+                                   <input type="text" required name="price" class="form-control">
+                                </div>
+
                                 <div class="col-sm-12 col-md-12 mb-1">
                                     <label>Tambah Foto Titik Pemetaan</label>
-                                   <input type="file" name="image[]" multiple class="form-control-file" id="">
+                                   <input type="file" name="image[]" multiple class="form-control-file">
                                 </div>
                             </div>
                             <button class="btn btn-primary mt-1">Simpan titik lokasi</button>
@@ -68,7 +82,6 @@
     </div>
     <script src="{{ asset('vendor/leaflet/leaflet.js') }}"></script>
     <script>
-
             let latt = document.querySelector('#lat');
             let long = document.querySelector('#long');
             // get current lokasi;
@@ -84,9 +97,6 @@
                 .setContent('Posisi Sekarang')
                 .openOn(map);
             }
-
-
-
             const pos = () => 
             {
                 if (navigator.geolocation) {
@@ -95,8 +105,6 @@
                     alert("Geolocation is not supported by this browser.");
                 }
             }
-
-
             function onMapClick(e) {
                 var popup = L.popup()
                 .setLatLng([0,0])
@@ -110,10 +118,7 @@
                 long.value = e.latlng.lng
             }
             map.on('click', onMapClick);
-
-
-
-           
     </script>
+    
 </section>
 @endsection

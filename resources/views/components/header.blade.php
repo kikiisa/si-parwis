@@ -11,13 +11,6 @@
             <img alt="image" src="{{ asset('vendor/assets/img/avatar/avatar-1.png') }}" class="rounded-circle mr-1">
             <div class="d-sm-none d-lg-inline-block">Hi, {{ Auth::check() ? Auth::user()->name : '' }}</div></a>
             <div class="dropdown-menu dropdown-menu-right">        
-            <a href="{{ Route('profile') }}" class="dropdown-item has-icon">
-                <i class="far fa-user"></i> Profile
-            </a>                
-            <a href="/" class="dropdown-item has-icon">
-                <i class="fas fa-cog"></i> Settings
-            </a>
-            <div class="dropdown-divider"></div>
             <a onclick="return confirm('apakah anda yakin ingin keluar dari sistem ?')" href="{{ route('logout') }}" class="dropdown-item has-icon text-danger">
                 <i class="fas fa-sign-out-alt"></i> Logout
             </a>

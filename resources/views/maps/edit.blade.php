@@ -83,7 +83,7 @@
                                     </div>
                                     <div class="col-sm-12 col-md-12 mb-1">
                                         <label for="">Deskripsi Full</label>
-                                        <textarea name="deskripsi_full" class="form-control" id="deskripsi" cols="30" rows="10" placeholder="Deskripsi">{{ $data->deskripsi_full }}</textarea>
+                                        <textarea name="deskripsi_full" class="summernote" id="deskripsi" cols="30" rows="10" placeholder="Deskripsi">{{ $data->deskripsi_full }}</textarea>
                                     </div>
                                     <div class="col-sm-12 col-md-12 mb-1">
                                         <label for="">Kategori Wisata</label>
@@ -94,6 +94,18 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    <div class="col-sm-12 col-md-12 mb-1">
+                                        <label for="">Jam Masuk</label>
+                                        <input type="time" value="{{$data->jam_buka}}" required name="jam_buka" class="form-control" id="">
+                                     </div>
+                                     <div class="col-sm-12 col-md-12 mb-1">
+                                        <label for="">Jam Tutup</label>
+                                        <input type="time" value="{{$data->jam_tutup}}" required name="jam_tutup" class="form-control" id="">
+                                     </div>
+                                     <div class="col-sm-12 col-md-12 mb-1">
+                                        <label for="">Price</label>
+                                        <input type="text" value="{{$data->price}}" required name="price" class="form-control">
+                                     </div>
                                     <div class="col-sm-12 col-md-12 mb-1">
                                        <label>Images</label>
                                        <input type="file" name="image[]" multiple id="image" class="form-control">
