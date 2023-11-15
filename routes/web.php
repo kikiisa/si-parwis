@@ -9,6 +9,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PemetaanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\UserController;
 use App\Models\WisataCategory;
 
 /*
@@ -42,7 +43,9 @@ Route::middleware('auth')->group(function(){
     Route::put('/data-pemetaan/{id}',[PemetaanController::class,'update'])->name('update_pemetaan');
     
     Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
-   
+    
+    Route::resource('user',UserController::class);
+    
 
     Route::get('/wisata-kategori',[CategoriWisata::class,"index"])->name("kategori");
     Route::get('/wisata-kategori/{id}',[CategoriWisata::class,"edit"])->name("kategori.edit");

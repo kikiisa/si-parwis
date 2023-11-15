@@ -32,6 +32,10 @@
                     href="{{ Route('pemetaan') }}"><i class="fas fa-map"></i> <span>Tambah Pemetaan</span></a></li>
         </ul>
         <ul class="sidebar-menu">
+            <li class="{{ Route::current()->getName() == 'user.index' ? 'active' : '' }}"><a class="nav-link"
+                    href="{{ Route('user.index') }}"><i class="fas fa-user"></i> <span>User</span></a></li>
+        </ul>
+        <ul class="sidebar-menu">
             <li class="{{ Route::current()->getName() == 'setting' ? 'active' : '' }}"><a class="nav-link"
                     href="{{ Route('setting') }}"><i class="fas fa-wrench"></i> <span>Pengaturan</span></a></li>
         </ul>
